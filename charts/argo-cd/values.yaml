@@ -1,10 +1,15 @@
 argo-cd:
+  crds:
+    install: true
   dex:
     enabled: false
   notifications:
     enabled: false
   applicationSet:
-    enabled: false
+    enabled: true
+  configs:
+    params:
+      server.insecure: true
   server:
-    extraArgs:
-      - --insecure
+    service:
+      type: ClusterIP

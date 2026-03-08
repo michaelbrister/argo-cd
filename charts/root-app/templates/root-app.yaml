@@ -1,18 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-app
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: {{ .Values.project }}
   source:
-    repoURL: https://github.com/michaelbrister/argo-cd.git
-    path: charts/root-app/
-    targetRevision: HEAD
+    repoURL: {{ .Values.source.repoURL }}
+    path: {{ .Values.source.path }}
+    targetRevision: {{ .Values.source.targetRevision }}
   destination:
-    server: https://kubernetes.default.svc
-    namespace: argo-cd 
+    server: {{ .Values.destination.server }}
+    namespace: {{ .Values.destination.namespace }}
   syncPolicy:
+{{- if .Values.syncPolicy.automated }}
     automated:
-      selfHeal: true
+      prune: {{ .Values.syncPolicy.prune }}
+      selfHeal: {{ .Values.syncPolicy.selfHeal }}
+{{- end }}
+    syncOptions:
+      - CreateNamespace={{ .Values.syncPolicy.createNamespace }}

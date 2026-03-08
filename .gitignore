@@ -1,2 +1,4 @@
 charts/**/charts
-charts/**/charts
+bootstrap/*.local.yaml
+bootstrap/*.secret.yaml
+bootstrap/*.private.yaml
