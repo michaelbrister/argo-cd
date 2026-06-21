@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook
+  namespace: workloads-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook
+  template:
+    metadata:
+      labels:
+        app: guestbook
+    spec:
+      containers:
+        - name: guestbook
+          image: registry.k8s.io/e2e-test-images/agnhost:2.45
+          args:
+            - netexec
+            - --http-port=8080
+          ports:
+            - containerPort: 8080

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: workloads
+  namespace: argo-cd
+spec:
+  description: Generated workload applications for shared cluster environments.
+  sourceRepos:
+    - git@github.com:michaelbrister/argo-cd.git
+  destinations:
+    - namespace: workloads-dev
+      server: https://kubernetes.default.svc
+    - namespace: workloads-prod
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
