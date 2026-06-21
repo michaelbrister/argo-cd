@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform
+  namespace: argo-cd
+spec:
+  description: Platform controllers and bootstrap components managed by the platform team.
+  sourceRepos:
+    - git@github.com:michaelbrister/argo-cd.git
+    - https://bitnami-labs.github.io/sealed-secrets
+  destinations:
+    - namespace: argo-cd
+      server: https://kubernetes.default.svc
+    - namespace: kube-system
+      server: https://kubernetes.default.svc
+    - namespace: workloads-dev
+      server: https://kubernetes.default.svc
+    - namespace: workloads-prod
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
